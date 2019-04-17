@@ -43,6 +43,11 @@ for (let i = idx; i < process.argv.length; i++) {
     app.commandLine.appendSwitch(s, v);
 }
 
+// App activate on mac os
+app.on('activate', function() {
+    client.write(consts.targetIds.app, consts.eventNames.appEnentActivate);
+});
+
 // App is quitting
 app.on('before-quit', () => quittingApp = true);
 

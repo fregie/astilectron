@@ -7,6 +7,7 @@ module.exports = {
     },
     eventNames: {
         appCmdQuit: "app.cmd.quit",
+        appEnentActivate: "app.event.activate",
         appEventReady: "app.event.ready",
         displayEventAdded: "display.event.added",
         displayEventMetricsChanged: "display.event.metrics.changed",
