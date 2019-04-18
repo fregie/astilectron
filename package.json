@@ -1,7 +1,11 @@
 {
   "name": "Astilectron",
   "description": "Electron-based cross-language application framework",
+  "scripts": {
+    "package": "electron-packager ./ Transocks-worker --platform=win32 --out ./Transocks --app-version 1.0.0 --overwrite --icon=./icon_48.ico"
+  },
   "devDependencies": {
-    "electron": "1.8.1"
+    "electron": "4.0.1",
+    "electron-packager": "^13.1.1"
   }
 }
