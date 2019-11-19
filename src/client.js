@@ -7,20 +7,38 @@ const url = require('url');
 class Client {
     // init initializes the Client
     init() {
-        let u = url.parse("tcp://" + process.argv[2], false, false)
+        this.u = url.parse("tcp://" + process.argv[2], false, false)
         this.socket = new net.Socket()
-        this.socket.connect(u.port, u.hostname, function() {});
+        this.socket.connect(this.u.port, this.u.hostname, function() {});
         this.socket.on('close', function() {
-            process.exit()
+            setTimeout(this.reconnect, 500)
         })
         return this
     }
 
+    reconnect(){
+        try{
+            this.socket = new net.Socket();
+            this.socket.connect(this.u.port, this.u.hostname, function() {});
+            this.socket.on('close', function() {
+                setTimeout(this.reconnect, 500)
+            })
+        }catch(e){
+            process.exit()
+        }
+    }
+
     // write writes an event to the server
     write(targetID, eventName, payload) {
-        let data = {name: eventName, targetID: targetID}
-        if (typeof payload !== "undefined") Object.assign(data, payload)
-        this.socket.write(JSON.stringify(data) + "\n")
+        try{
+            let data = {name: eventName, targetID: targetID}
+            if (typeof payload !== "undefined") Object.assign(data, payload)
+            if (!this.socket.destroyed && !this.socket.pending){
+                this.socket.write(JSON.stringify(data) + "\n")
+            }
+        }catch (e) {
+            console.log("I caught an error: " + e.message);
+        }
     }
 }
 
