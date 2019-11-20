@@ -7,7 +7,7 @@ const url = require('url');
 class Client {
     // init initializes the Client
     init() {
-        this.u = url.parse("tcp://" + process.argv[2], false, false)
+        this.u = url.parse("tcp://" + process.argv[1], false, false)
         this.socket = new net.Socket()
         this.socket.connect(this.u.port, this.u.hostname, function() {});
         this.socket.on('close', function() {

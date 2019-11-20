@@ -14,7 +14,7 @@ let quittingApp = false;
 
 // Single instance
 let lastWindow = null;
-if (process.argv[3] === "true") {
+if (process.argv[2] === "true") {
     // Lock
     const singlesInstanceLock = app.requestSingleInstanceLock();
     if (!singlesInstanceLock) {
